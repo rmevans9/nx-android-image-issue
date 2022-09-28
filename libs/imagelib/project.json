@@ -1,0 +1,24 @@
+{
+  "name": "imagelib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/imagelib/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/imagelib/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/imagelib"],
+      "options": {
+        "jestConfig": "libs/imagelib/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
