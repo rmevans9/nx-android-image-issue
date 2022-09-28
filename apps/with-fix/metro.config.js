@@ -1,12 +1,17 @@
 const { withNxMetro } = require('@nrwl/react-native');
 const { getDefaultConfig } = require('metro-config');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
+const {
+  getMetroAndroidAssetsResolutionFix,
+} = require('react-native-monorepo-tools');
+
+const androidAssetsResolutionFix = getMetroAndroidAssetsResolutionFix();
 
 module.exports = (async () => {
   const {
     resolver: { sourceExts, assetExts },
   } = await getDefaultConfig();
-  return withNxMetro(
+  const config = withNxMetro(
     {
       transformer: {
         getTransformOptions: async () => ({
@@ -35,4 +40,18 @@ module.exports = (async () => {
       watchFolders: [],
     }
   );
+
+  return {
+    ...config,
+    transformer: {
+      ...config.transformer,
+      publicPath: androidAssetsResolutionFix.publicPath,
+    },
+    server: {
+      ...(config.server || {}),
+      enhanceMiddleware: (middleware) => {
+        return androidAssetsResolutionFix.applyMiddleware(middleware);
+      },
+    },
+  };
 })();

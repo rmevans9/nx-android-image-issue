@@ -5,4 +5,4 @@ function App() {
   return <TestImage />;
 }
 
-AppRegistry.registerComponent('WithFix', () => App);
+AppRegistry.registerComponent('WithoutFix', () => App);
